@@ -1,0 +1,28 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore environment variables
+.env
+.venv
+
+# Ignore log files
+*.log
+
+# Ignore build outputs
+dist/
+build/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE specific files
+.vscode/
+.idea/
+*.iml
+.venv/bin/activate
+multi_tool_agent/__pycache__/agent.cpython-311.pyc
+multi_tool_agent/__pycache__/__init__.cpython-311.pyc
+multi_tool_agent/tools/__pycache__/get_weather.cpython-312.pyc
+multi_tool_agent/runners/__pycache__/runner_weather.cpython-312.pyc
+multi_tool_agent/agents/__pycache__/weather_agent_v1.cpython-312.pyc
