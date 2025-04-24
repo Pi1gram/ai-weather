@@ -26,7 +26,7 @@ SESSION_ID = "session_team"
 
 
 async def call_agent(query: str):
-    print(f"\n>> User: {query}")  # Print the user query
+    logging.info(f"\n>> User: {query}")
     content = types.Content(role="user", parts=[types.Part(text=query)])
     final_response_text = None  # Variable to store the final text
 
@@ -42,12 +42,10 @@ async def call_agent(query: str):
                 final_response_text = "[Agent did not provide a text response]"
             break  # Exit the loop once the final response is found
 
-    # Print the final agent response after the loop finishes
     if final_response_text is not None:
-        print(f"<< Agent: {final_response_text}")
+        logging.info(f"<< Agent: {final_response_text}")
     else:
-        # This case might happen if the agent stream ends without a final response event
-        print("<< Agent: [No final response received]")
+        logging.warning("<< Agent: [No final response received]")
 
 
 async def main():

@@ -14,14 +14,14 @@ API_URL = "http://localhost:5000/api/weather"  # Your Flask API endpoint
 # Configure Google AI
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 if not GOOGLE_API_KEY:
-    print("Error: GOOGLE_API_KEY not found in environment variables.")
+    logging.error("Error: GOOGLE_API_KEY not found in environment variables.")
     gemini_model = None
 else:
     try:
         genai.configure(api_key=GOOGLE_API_KEY)
         gemini_model = genai.GenerativeModel("gemini-1.5-flash")
     except Exception as e:
-        print(f"Error initializing Google Gemini model: {e}")
+        logging.error(f"Error initializing Google Gemini model: {e}")
         gemini_model = None
 
 

@@ -27,6 +27,6 @@ If it's a weather request, handle it yourself
 using 'get_weather'. 
 For anything else, respond appropriately or state 
 you cannot handle it.""",
-    tools=[get_weather],  
+    tools=[get_weather],
     sub_agents=[greeting_agent, farewell_agent],
 )

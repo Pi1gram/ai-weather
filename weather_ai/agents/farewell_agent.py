@@ -14,7 +14,7 @@ a polite goodbye message. Use the 'say_goodbye' tool when the user indicates
 they are leaving or ending the conversation (e.g., using words like 'bye', 
 'goodbye', 'thanks bye', 'see you'). Do not perform any other actions.""",
         description="""Handles simple farewells and goodbyes using the 
-        'say_goodbye' tool.""",  
+        'say_goodbye' tool.""",
         tools=[say_goodbye],
     )
 except Exception as e:
