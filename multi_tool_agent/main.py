@@ -6,8 +6,8 @@ from dotenv import load_dotenv
 load_dotenv()   # <-- this reads your .env into os.environ
 
 
-USER_ID = "user_1"
-SESSION_ID = "session_001"
+USER_ID = "user_team"
+SESSION_ID = "session_team"
 
 async def call_agent(query: str):
     print(f"\n>> User: {query}")
@@ -22,9 +22,9 @@ async def call_agent(query: str):
             break
 
 async def main():
-    await call_agent("What is the weather in London?")
-    await call_agent("How about Paris?")
-    await call_agent("Tell me the weather in New York")
+    await call_agent("Hello there!")
+    await call_agent("Whats the weather in tokyo?")
+    await call_agent("Thanks, bye!")
 
 if __name__ == "__main__":
     asyncio.run(main())
