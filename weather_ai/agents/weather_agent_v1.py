@@ -2,9 +2,7 @@ from google.adk.agents import Agent
 from tools.get_weather import get_weather
 from agents.greeting_agent import greeting_agent
 from agents.farewell_agent import farewell_agent
-
-# You can use a string model name (Gemini) or a LiteLlm wrapper here.
-MODEL = "gemini-2.0-flash"
+from config import MODEL
 
 
 weather_agent_v2 = Agent(

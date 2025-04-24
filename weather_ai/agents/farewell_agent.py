@@ -1,8 +1,6 @@
 from google.adk.agents import Agent
 from tools.say_goodbye import say_goodbye
-
-MODEL = "gemini-2.0-flash"
-
+from config import MODEL
 
 farewell_agent = None
 try:

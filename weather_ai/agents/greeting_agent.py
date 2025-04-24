@@ -1,7 +1,8 @@
 from google.adk.agents import Agent
 from tools.say_hello import say_hello
+from config import MODEL
 
-MODEL = "gemini-2.0-flash"
+
 greeting_agent = None
 try:
     greeting_agent = Agent(
