@@ -3,7 +3,6 @@ import asyncio
 from google.genai import types
 from runners.runner_weather import runner
 from dotenv import load_dotenv
-import logging
 import warnings  # Import the warnings module
 
 # -------------------------------------------------------------------------------------------------
