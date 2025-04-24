@@ -2,7 +2,7 @@ from google.adk.agents import Agent
 from tools.say_goodbye import say_goodbye
 import os
 
-MODEL = os.getenv("GOOGLE_GENAI_USE_VERTEXAI", "gemini-2.0-flash")
+MODEL = "gemini-2.0-flash"
 
 
 farewell_agent = None
@@ -17,7 +17,8 @@ try:
         description="Handles simple farewells and goodbyes using the 'say_goodbye' tool.", # Crucial for delegation
         tools=[say_goodbye],
     )
-
-    print(f"✅ Agent '{farewell_agent.name}' created using model '{farewell_agent.model}'.")
 except Exception as e:
-    print(f"❌ Could not create Farewell agent. Check API Key ({farewell_agent.model}). Error: {e}")
+    raise RuntimeError(
+        f"Failed to initialize farewell_agent: {e}. "
+        "Ensure the model is available and the environment is set up correctly."
+    )

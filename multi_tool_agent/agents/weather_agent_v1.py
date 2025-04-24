@@ -5,7 +5,7 @@ from agents.greeting_agent import greeting_agent
 from agents.farewell_agent import farewell_agent
 
 # You can use a string model name (Gemini) or a LiteLlm wrapper here.
-MODEL = os.getenv("GOOGLE_GENAI_USE_VERTEXAI", "gemini-2.0-flash")
+MODEL = "gemini-2.0-flash"
 
 
 weather_agent_v2 = Agent(
@@ -32,5 +32,4 @@ weather_agent_v2 = Agent(
         # Key change: Link the sub-agents here!
         sub_agents=[greeting_agent, farewell_agent]
 )    
-print(f"✅ Root Agent '{weather_agent_v2.name}' created using model '{MODEL}' \
-      with sub-agents: {[sa.name for sa in weather_agent_v2.sub_agents]}")
+

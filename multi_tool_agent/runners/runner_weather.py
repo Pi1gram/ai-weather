@@ -16,7 +16,6 @@ session_service.create_session(
     user_id=USER_ID,
     session_id=SESSION_ID
 )
-print(f"Session created: App='{APP_NAME}', User='{USER_ID}', Session='{SESSION_ID}'")
 
 # Create the runner
 runner = Runner(
@@ -24,5 +23,3 @@ runner = Runner(
     app_name=APP_NAME,
     session_service=session_service
 )
-
-print(f"Runner created for agent '{runner.agent.name}'.")
