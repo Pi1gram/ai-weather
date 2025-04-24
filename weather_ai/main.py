@@ -1,4 +1,11 @@
 import logging
+import asyncio
+from google.genai import types
+from runners.runner_weather import runner
+from dotenv import load_dotenv
+import logging
+import warnings  # Import the warnings module
+
 # -------------------------------------------------------------------------------------------------
 # Silence all GenAI/ADK warnings about function‐calling internals
 logging.getLogger().setLevel(logging.ERROR)
@@ -6,14 +13,6 @@ logging.getLogger("google").setLevel(logging.ERROR)
 logging.getLogger("google.genai").setLevel(logging.ERROR)
 logging.getLogger("google.adk").setLevel(logging.ERROR)
 # -------------------------------------------------------------------------------------------------
-
-import os
-import asyncio
-from google.genai import types
-from runners.runner_weather import runner
-from dotenv import load_dotenv
-import logging
-import warnings  # Import the warnings module
 
 load_dotenv()  # <-- this reads your .env into os.environ
 

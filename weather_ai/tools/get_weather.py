@@ -64,13 +64,12 @@ def get_weather(city: str) -> Dict[str, Union[str, Dict[str, str]]]:
         )
 
         generation_config = genai.types.GenerationConfig(
-            temperature=0.7,  
+            temperature=0.7,
             max_output_tokens=100,
         )
         gemini_response = gemini_model.generate_content(
             prompt, generation_config=generation_config
         )
-
 
         if not gemini_response.parts:
             block_reason = (
@@ -103,4 +102,3 @@ def get_weather(city: str) -> Dict[str, Union[str, Dict[str, str]]]:
         # Log the full traceback for AI errors
         logging.exception("AI processing failed")
         return {"status": "error", "error_message": f"AI processing failed: {str(e)}"}
-

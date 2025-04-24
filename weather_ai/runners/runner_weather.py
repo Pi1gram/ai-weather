@@ -12,14 +12,10 @@ SESSION_ID = "session_team"
 
 # Create the session
 session_service.create_session(
-    app_name=APP_NAME,
-    user_id=USER_ID,
-    session_id=SESSION_ID
+    app_name=APP_NAME, user_id=USER_ID, session_id=SESSION_ID
 )
 
 # Create the runner
 runner = Runner(
-    agent=weather_agent_v2,
-    app_name=APP_NAME,
-    session_service=session_service
+    agent=weather_agent_v2, app_name=APP_NAME, session_service=session_service
 )
