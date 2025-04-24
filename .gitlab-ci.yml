@@ -1,0 +1,37 @@
+---
+
+default:
+  tags:
+    - build-runner
+
+stages:
+  - validate
+
+validate:
+  stage: validate
+  image: python:3.12-slim #
+  before_script:
+    - python --version
+    - pip install virtualenv
+    - virtualenv .venv
+    - source .venv/bin/activate
+    - pip install --upgrade pip
+    - echo "Installing requirements..."
+    - pip install --upgrade --requirement requirements.txt
+    - pip --version
+    - echo "Installed packages:"
+    - pip list --local
+  script:
+    - echo "Checking formatting..."
+    - ruff format --check .
+    - sort-requirements --check requirements.txt
+    - echo "Running linter..."
+    - ruff check . --output-format gitlab --output-file public/ruff-report.json || true
+    - echo "Running tests..."
+  cache:
+    key: "$CI_COMMIT_BRANCH-python-$CI_COMMIT_SHORT_SHA"
+    paths:
+      - .venv
+      - .cache/pip
+    policy: pull-push
+

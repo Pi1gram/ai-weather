@@ -51,8 +51,8 @@ async def call_agent(query: str):
 
 
 async def main():
-    await call_agent("Hello there!")
-    await call_agent("Whats the weather in tokyo?")
+    await call_agent("how are you")
+    await call_agent("Whats the weather in melbourne?")
     await call_agent("Thanks, bye!")
 
 

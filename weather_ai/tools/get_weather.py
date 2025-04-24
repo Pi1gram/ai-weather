@@ -2,22 +2,12 @@ import requests
 from typing import Dict, Union
 import os
 import logging
-import warnings
 from dotenv import load_dotenv  # Make sure dotenv is loaded
 import google.generativeai as genai  # Import Google AI library
 
 # Load environment variables (ensure this runs)
 load_dotenv()
 
-# Suppress specific warnings if needed (optional)
-warnings.filterwarnings(
-    "ignore",
-    message="Some weights of the model checkpoint at distilbert-base-uncased were not used when initializing DistilBertForCausalLM.",
-)
-warnings.filterwarnings(
-    "ignore",
-    message="The model 'DistilBertForCausalLM' is not supported for text-generation.",
-)
 
 API_URL = "http://localhost:5000/api/weather"  # Your Flask API endpoint
 
