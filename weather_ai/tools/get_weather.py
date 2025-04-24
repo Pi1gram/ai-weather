@@ -21,7 +21,7 @@ else:
         genai.configure(api_key=GOOGLE_API_KEY)
         gemini_model = genai.GenerativeModel("gemini-1.5-flash")
     except Exception as e:
-        logging.error(f"Error initializing Google Gemini model: {e}")
+        logging.error("Error initializing Google Gemini model: %s", e)
         gemini_model = None
 
 
@@ -86,7 +86,7 @@ def get_weather(city: str) -> Dict[str, Union[str, Dict[str, str]]]:
         return {"status": "success", "report": ai_response}
 
     except requests.exceptions.RequestException as e:
-        logging.error(f"API request failed: {e}")
+        logging.error("API request failed: %s", e)
         return {"status": "error", "error_message": f"API request failed: {str(e)}"}
     except Exception as e:
         # Log the full traceback for AI errors

@@ -17,16 +17,12 @@ load_dotenv()  # <-- this reads your .env into os.environ
 
 warnings.filterwarnings("ignore")
 
-# Configure logging to suppress lower-level messages from libraries if desired
-# logging.basicConfig(level=logging.ERROR) # Example: Show only ERROR and above
-# Or keep default logging level
-
 USER_ID = "user_team"
 SESSION_ID = "session_team"
 
 
 async def call_agent(query: str):
-    logging.info(f"\n>> User: {query}")
+    logging.info("\n>> User: %s", query)
     content = types.Content(role="user", parts=[types.Part(text=query)])
     final_response_text = None  # Variable to store the final text
 
@@ -43,7 +39,7 @@ async def call_agent(query: str):
             break  # Exit the loop once the final response is found
 
     if final_response_text is not None:
-        logging.info(f"<< Agent: {final_response_text}")
+        logging.info("<< Agent: %s", final_response_text)
     else:
         logging.warning("<< Agent: [No final response received]")
 
