@@ -1,8 +1,9 @@
 import logging
 import asyncio
 from google.genai import types
-from runners.runner_weather import runner
+from runners.runner_weather import create_weather_runner
 from dotenv import load_dotenv
+from config import DEFAULT_SESSION_ID, DEFAULT_USER_ID
 import warnings  # Import the warnings module
 
 # -------------------------------------------------------------------------------------------------
@@ -17,9 +18,7 @@ load_dotenv()  # <-- this reads your .env into os.environ
 
 warnings.filterwarnings("ignore")
 
-USER_ID = "user_team"
-SESSION_ID = "session_team"
-
+runner = create_weather_runner()
 
 async def call_agent(query: str):
     logging.info("\n>> User: %s", query)
@@ -27,7 +26,8 @@ async def call_agent(query: str):
     final_response_text = None  # Variable to store the final text
 
     async for event in runner.run_async(
-        user_id=USER_ID, session_id=SESSION_ID, new_message=content
+        user_id=DEFAULT_USER_ID, session_id=DEFAULT_SESSION_ID, 
+        new_message=content
     ):
         # Check if this event is the final response from the agent
         if event.is_final_response():

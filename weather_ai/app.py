@@ -2,15 +2,15 @@ from flask import Flask, render_template, request, jsonify, send_from_directory
 import asyncio
 from google.genai import types
 from google.genai import errors as genai_errors
-from runners.runner_weather import runner
+from runners.runner_weather import create_weather_runner
+from config import DEFAULT_SESSION_ID, DEFAULT_USER_ID
 from dotenv import load_dotenv
 
 load_dotenv()
 
 app = Flask(__name__)
 
-USER_ID = "user_team"
-SESSION_ID = "session_team"
+runner = create_weather_runner(user_id=DEFAULT_USER_ID, session_id=DEFAULT_SESSION_ID)
 
 
 async def call_agent(query: str):
@@ -22,7 +22,7 @@ async def call_agent(query: str):
 
     try:
         async for event in runner.run_async(
-            user_id=USER_ID, session_id=SESSION_ID, new_message=content
+            user_id=DEFAULT_USER_ID, session_id=DEFAULT_SESSION_ID, new_message=content
         ):
             # Check event type by class name
             if event.__class__.__name__ == "ToolOutputEvent" and getattr(
