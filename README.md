@@ -6,7 +6,7 @@ This project implements a multi-agent system using the Google Agent Development 
 
 - **Weather Information:** Fetches weather data for a specified city using a local API and summarizes it using Google Gemini.
 - **Conversational AI:** Handles basic greetings and farewells through dedicated agents.
-- **Multi-Agent Architecture:** Uses a root agent (`weather_agent_v2`) to coordinate tasks and delegate to specialized sub-agents (`greeting_agent`, `farewell_agent`).
+- **Multi-Agent Architecture:** Uses a root agent (`weather_agent_v2`) to coordinate tasks and delegate to specialized sub-agents (`greeting_agent`, `farewell_agent`, `plot_weather`).
 - **Web Interface:** Provides a simple chat interface using Flask for user interaction.
 - **Configurable:** Model names and logging levels can be configured via `config.py` and environment variables.
 

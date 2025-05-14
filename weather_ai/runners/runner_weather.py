@@ -1,6 +1,6 @@
 from google.adk.sessions import InMemorySessionService
 from google.adk.runners import Runner
-from agents.weather_agent_v1 import weather_agent_v2
+from agents.weather_agent_v1 import weather_agent_v1
 
 # Session service setup
 session_service = InMemorySessionService()
@@ -17,5 +17,5 @@ session_service.create_session(
 
 # Create the runner
 runner = Runner(
-    agent=weather_agent_v2, app_name=APP_NAME, session_service=session_service
+    agent=weather_agent_v1, app_name=APP_NAME, session_service=session_service
 )

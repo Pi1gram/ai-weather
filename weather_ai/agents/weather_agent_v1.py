@@ -6,7 +6,7 @@ from agents.plotting_agent import plotting_agent
 from config import MODEL
 
 
-weather_agent_v2 = Agent(
+weather_agent_v1 = Agent(
     name="weather_agent_v2",
     model=MODEL,
     description="""The main coordinator agent. Handles weather 
