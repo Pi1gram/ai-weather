@@ -8,8 +8,13 @@ import google.generativeai as genai  # Import Google AI library
 # Load environment variables (ensure this runs)
 load_dotenv()
 
+_cached_forecast = {}
+WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
+if not WEATHER_API_KEY:
+    logging.error("Error: WEATHER_API_KEY not found in environment variables.")
+    raise ValueError("WEATHER_API_KEY not found in environment variables.")
 
-API_URL = "http://localhost:5000/api/weather"  # Your Flask API endpoint
+API_URL = "http://api.weatherapi.com/v1/forecast.json"
 
 # Configure Google AI
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
@@ -26,30 +31,45 @@ else:
 
 
 def get_weather(city: str) -> Dict[str, Union[str, Dict[str, str]]]:
-    """Fetches weather from Flask API and processes with Google Gemini."""
+    """
+    Fetches and caches a week's forecast for the city.
+    Returns today's weather summary by default.
+    """
+    global _cached_forecast
     if gemini_model is None:
         return {
             "status": "error",
             "error_message": "Google Gemini model failed to initialize.",
         }
     try:
-        response = requests.get(API_URL, params={"city": city}, timeout=20)
-        response.raise_for_status()
-        data = response.json()
+        # Use cached forecast if available and for the same city
+        forecast = _cached_forecast.get(city.lower())
+        if not forecast:
+            response = requests.get(
+                API_URL,
+                params={"key": WEATHER_API_KEY, "q": city, "days": 7},
+                timeout=20,
+            )
+            response.raise_for_status()
+            forecast = response.json()
+            if "error" in forecast:
+                return {"status": "error", "error_message": forecast["error"]}
+            _cached_forecast[city.lower()] = forecast
 
-        if "error" in data:
-            return {"status": "error", "error_message": data["error"]}
+        # Default: summarize today's weather
+        today = forecast["forecast"]["forecastday"][0]
+        condition = today["day"]["condition"]["text"]
+        temp_c = today["day"]["maxtemp_c"]
+        temp_f = today["day"]["maxtemp_f"]
+        wind_kph = today["day"]["maxwind_kph"]
+        wind_mph = today["day"]["maxwind_mph"]
+        date_str = today["date"]
 
-        raw_data = {
-            "description": data.get("description", "No description available."),
-            "temperature": data.get("temperature", "Unknown"),
-            "wind": data.get("wind", "Unknown"),
-        }
         prompt = (
-            f"Generate a brief, human-readable weather report for {city} based on this data:\n"
-            f"- Current conditions: {raw_data['description']}\n"
-            f"- Temperature: {raw_data['temperature']}\n"
-            f"- Wind: {raw_data['wind']}\n\n"
+            f"Generate a brief, human-readable weather report for {city} on {date_str} based on this data:\n"
+            f"- Condition: {condition}\n"
+            f"- Max Temperature: {temp_c}°C / {temp_f}°F\n"
+            f"- Max Wind: {wind_kph} kph ({wind_mph} mph)\n"
             f"Report:"
         )
 
@@ -73,22 +93,24 @@ def get_weather(city: str) -> Dict[str, Union[str, Dict[str, str]]]:
                 else "N/A"
             )
             logging.warning(
-                f"Gemini response blocked. Reason: {block_reason}. \
-                Safety Ratings: {safety_ratings}"
+                f"Gemini response blocked. Reason: {block_reason}. "
+                f"Safety Ratings: {safety_ratings}"
             )
             return {
                 "status": "error",
-                "error_message": f"AI response generation \
-                blocked (Reason: {block_reason}).",
+                "error_message": f"AI response generation blocked (Reason: {block_reason}).",
             }
 
         ai_response = gemini_response.text.strip()
-        return {"status": "success", "report": ai_response}
+        return {
+            "status": "success",
+            "report": ai_response,
+            "forecast_data": forecast["forecast"]["forecastday"],  # for follow-up use
+        }
 
     except requests.exceptions.RequestException as e:
         logging.error("API request failed: %s", e)
         return {"status": "error", "error_message": f"API request failed: {str(e)}"}
     except Exception as e:
-        # Log the full traceback for AI errors
         logging.exception("AI processing failed")
         return {"status": "error", "error_message": f"AI processing failed: {str(e)}"}
