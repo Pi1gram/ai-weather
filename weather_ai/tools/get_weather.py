@@ -1,18 +1,13 @@
+from httpx import get
 import requests
 from typing import Dict, Union
 import os
 import logging
-from dotenv import load_dotenv  # Make sure dotenv is loaded
+from core.config_utils import get_weather_api_key
 
-# Load environment variables (ensure this runs)
-load_dotenv()
 
 _cached_forecast = {}
-WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
-if not WEATHER_API_KEY:
-    logging.error("Error: WEATHER_API_KEY not found in environment variables.")
-    raise ValueError("WEATHER_API_KEY not found in environment variables.")
-
+WEATHER_API_KEY = get_weather_api_key()
 API_URL = "http://api.weatherapi.com/v1/forecast.json"
 
 
@@ -31,7 +26,7 @@ def get_weather(city: str) -> Dict[str, Union[str, Dict[str, str]]]:
             response = requests.get(
                 API_URL,
                 params={"key": WEATHER_API_KEY, "q": city, "days": 7},
-                timeout=20,
+                timeout=10,
             )
             response.raise_for_status()
             forecast_data = response.json()
