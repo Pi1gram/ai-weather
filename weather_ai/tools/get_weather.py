@@ -1,7 +1,5 @@
-from httpx import get
 import requests
 from typing import Dict, Union
-import os
 import logging
 from core.config_utils import get_weather_api_key
 

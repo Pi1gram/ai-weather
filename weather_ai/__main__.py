@@ -20,14 +20,14 @@ warnings.filterwarnings("ignore")
 
 runner = create_weather_runner()
 
+
 async def call_agent(query: str):
     logging.info("\n>> User: %s", query)
     content = types.Content(role="user", parts=[types.Part(text=query)])
     final_response_text = None  # Variable to store the final text
 
     async for event in runner.run_async(
-        user_id=DEFAULT_USER_ID, session_id=DEFAULT_SESSION_ID, 
-        new_message=content
+        user_id=DEFAULT_USER_ID, session_id=DEFAULT_SESSION_ID, new_message=content
     ):
         # Check if this event is the final response from the agent
         if event.is_final_response():

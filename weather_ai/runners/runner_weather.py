@@ -7,13 +7,13 @@ from config import DEFAULT_SESSION_ID, DEFAULT_USER_ID
 _session_service_instance = None
 APP_NAME = "weather_tutorial_app"
 
+
 def get_session_service():
     """Returns a singleton InMemorySessionService instance."""
     global _session_service_instance
     if _session_service_instance is None:
         _session_service_instance = InMemorySessionService()
     return _session_service_instance
-
 
 
 def create_weather_runner(
@@ -55,5 +55,3 @@ def create_weather_runner(
         session_service=session_service,
     )
     return runner
-
-
