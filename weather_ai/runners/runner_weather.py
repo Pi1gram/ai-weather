@@ -5,7 +5,7 @@ from config import DEFAULT_SESSION_ID, DEFAULT_USER_ID
 
 # Store the session service instance globally within this module to ensure it's a singleton
 _session_service_instance = None
-
+APP_NAME = "weather_tutorial_app"
 
 def get_session_service():
     """Returns a singleton InMemorySessionService instance."""
@@ -14,9 +14,6 @@ def get_session_service():
         _session_service_instance = InMemorySessionService()
     return _session_service_instance
 
-
-# Define constants for the application and default session
-APP_NAME = "weather_tutorial_app"
 
 
 def create_weather_runner(
