@@ -8,7 +8,7 @@ def plot_city_weather_for_dates(city: str, dates: List[str]) -> str:
     Fetches max temperatures for the city and dates, then plots them.
     Args:
         city: The city name (e.g. "Melbourne").
-        dates: List of dates in YYYY-MM-DD format (e.g. ["2025-05-15", 
+        dates: List of dates in YYYY-MM-DD format (e.g. ["2025-05-15",
         "2025-05-16"]).
     Returns:
         The file path to the saved PNG plot.
@@ -24,6 +24,6 @@ def plot_city_weather_for_dates(city: str, dates: List[str]) -> str:
     if not filtered:
         return None
     temps = [d["day"]["maxtemp_c"] for d in filtered]
-    plot_path = plot_max_temperatures(dates, temps, city)
+    _ = plot_max_temperatures(dates, temps, city)
     # Return the relative URL for the frontend
     return f"/plots/{city.replace(' ', '_').lower()}_plot.png"

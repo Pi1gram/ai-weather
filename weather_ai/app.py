@@ -37,9 +37,7 @@ async def call_agent(query: str):
                         ):
                             captured_plot_url = response_data["plot_url"]
 
-            elif (
-                event.is_final_response()
-            ):
+            elif event.is_final_response():
                 if event.content and event.content.parts:
                     agent_final_text = event.content.parts[0].text
                 break
@@ -66,8 +64,7 @@ async def call_agent(query: str):
     if captured_plot_url:
         response_payload["plot_url"] = captured_plot_url
 
-    if not response_payload.get("text") and \
-    not response_payload.get("plot_url"):
+    if not response_payload.get("text") and not response_payload.get("plot_url"):
         return {"text": "[No meaningful response processed]"}
 
     return response_payload
