@@ -40,7 +40,7 @@ This project implements a multi-agent system using the Google Agent Development 
 ### Clone the Repository
 
     ```bash
-    git clone https://gitlab.com/theMarloGroup/training/students/jbhasin/ai_weather.git
+    git clone git@github.com:Pi1gram/ai-weather.git
     cd ai_weather
     ```
 
